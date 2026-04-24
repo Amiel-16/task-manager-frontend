@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import TaskInput from '../components/TaskInput'
 import TaskList from '../components/TaskList'
 import { ApiError, createTask, deleteTask, getTasks, type TaskDto, updateTask } from '../services/api'
@@ -11,6 +12,7 @@ type DashboardProps = {
 }
 
 function Dashboard({ token, onLogout }: DashboardProps) {
+  const navigate = useNavigate()
   const [tasks, setTasks] = useState<Task[]>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -88,12 +90,20 @@ function Dashboard({ token, onLogout }: DashboardProps) {
       <div className="mx-auto w-full max-w-3xl space-y-6">
         <header className="flex items-center justify-between rounded-2xl bg-white px-6 py-4 shadow-md">
           <h1 className="text-2xl font-bold text-slate-800">TaskFlow Dashboard</h1>
-          <button
-            onClick={onLogout}
-            className="rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
-          >
-            Logout
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/chat')}
+              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            >
+              Chat
+            </button>
+            <button
+              onClick={onLogout}
+              className="rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
+            >
+              Logout
+            </button>
+          </div>
         </header>
 
         <section className="rounded-2xl bg-white p-6 shadow-md">

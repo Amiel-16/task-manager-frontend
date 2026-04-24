@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import ChatPage from './pages/ChatPage'
 import Dashboard from './pages/Dashboard'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -75,7 +76,13 @@ function App() {
   }
 
   if (token) {
-    return <Dashboard token={token} onLogout={handleLogout} />
+    return (
+      <Routes>
+        <Route path="/" element={<Dashboard token={token} onLogout={handleLogout} />} />
+        <Route path="/chat" element={<ChatPage onUnauthorized={handleLogout} />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    )
   }
 
   return (
